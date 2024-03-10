@@ -9,7 +9,6 @@ jobs:
     permissions: write-all
     name: Release ${{ matrix.platform.name }}
     runs-on: self-hosted
-    if: github.runner_labels.contains('self-hosted') && github.runner_labels.contains('aarch64')
     strategy:
       matrix:
         platform: [linux/arm64]
@@ -20,15 +19,9 @@ jobs:
       CARGO_PROFILE_RELEASE_LTO: "true"
       RUSTFLAGS: "-C link-arg=-s"
       OPENSSL_STATIC: 1
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
       
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-        with:
-          platforms: linux/aarch64
+    steps:
+      - uses: actions/checkout@master
 
       - name: Cache crates
         uses: actions/cache@v3
@@ -52,11 +45,11 @@ jobs:
           toolchain: stable
           target: aarch64-unknown-linux-gnu # Specify the target for arm64
 
-      - name: Build with Docker
-        run: |
-          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-          docker buildx create --name mybuilder --use
-          docker buildx build --platform linux/aarch64 -t myimage:latest
+      - name: Build
+        run: cargo build --release --target aarch64-unknown-linux-gnu
+        env:
+          UPDATE_PLATFORM: ${{ matrix.platform.name }}
+          MACOSX_DEPLOYMENT_TARGET: 11.0
 
       - name: UPX compress binary
         uses: crazy-max/ghaction-upx@v2.2.0
