@@ -9,6 +9,7 @@ jobs:
     permissions: write-all
     name: Release ${{ matrix.platform.name }}
     runs-on: self-hosted
+    if: github.runner_labels.contains('self-hosted') && github.runner_labels.contains('aarch64')
     strategy:
       matrix:
         platform: [linux/arm64]
