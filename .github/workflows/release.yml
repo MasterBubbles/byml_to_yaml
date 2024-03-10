@@ -9,11 +9,6 @@ jobs:
     permissions: write-all
     name: Release ${{ matrix.platform.name }}
     runs-on: [self-hosted, aarch64] # Correctly specify self-hosted and aarch64 labels here
-    strategy:
-      matrix:
-        os: [ubuntu-22.04]
-        name: [linux]
-        ext: ['~']
     
     env:
       project: "byml-to-yaml"
