@@ -8,16 +8,7 @@ jobs:
   release:
     permissions: write-all
     name: Release ${{ matrix.platform.name }}
-    runs-on: ${{ matrix.platform.os }}
-    strategy:
-      matrix:
-        platform:
-          - os: ubuntu-latest
-            name: linux
-            ext: ~
-          - os: windows-latest
-            name: windows
-            ext: .exe
+    runs-on: ubuntu-22.04
     
     env:
       project: "byml-to-yaml"
