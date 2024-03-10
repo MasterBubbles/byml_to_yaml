@@ -43,9 +43,10 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
+          target: aarch64-unknown-linux-gnu # Specify the target for arm64
 
       - name: Build
-        run: cargo build --release
+        run: cargo build --release --target aarch64-unknown-linux-gnu
         env:
           UPDATE_PLATFORM: ${{ matrix.platform.name }}
           MACOSX_DEPLOYMENT_TARGET: 11.0
