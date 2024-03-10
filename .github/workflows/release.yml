@@ -8,7 +8,7 @@ jobs:
   release:
     permissions: write-all
     name: Release ${{ matrix.platform.name }}
-    runs-on: ubuntu-22.04
+    runs-on: [self-hosted, aarch64]
     strategy:
       matrix:
         platform: [linux/arm64]
