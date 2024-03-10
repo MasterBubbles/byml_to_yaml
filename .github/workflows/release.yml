@@ -8,11 +8,11 @@ jobs:
   release:
     permissions: write-all
     name: Release ${{ matrix.platform.name }}
-    runs-on: ubuntu-22.04
+    runs-on: [self-hosted, aarch64] # Specify self-hosted and aarch64 labels here
     strategy:
       matrix:
-        platform: [linux/arm64]
-    
+        platform: [ubuntu-22.04]
+
     env:
       project: "byml-to-yaml"
       CARGO_PROFILE_RELEASE_CODEGEN_UNITS: 1
@@ -43,9 +43,10 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
+          target: aarch64-unknown-linux-gnu # Ensure the Rust toolchain is set for aarch64
 
       - name: Build
-        run: cargo build --release
+        run: cargo build --release --target aarch64-unknown-linux-gnu # Specify the target for aarch64
         env:
           UPDATE_PLATFORM: ${{ matrix.platform.name }}
           MACOSX_DEPLOYMENT_TARGET: 11.0
@@ -72,4 +73,3 @@ jobs:
           name: ${{ env.project }}-${{ steps.toml.outputs.value }}-${{ matrix.platform.name }}.zip
           path: target/release/${{ env.project }}-${{ steps.toml.outputs.value }}-${{ matrix.platform.name }}.zip
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          
