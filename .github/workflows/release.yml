@@ -59,7 +59,7 @@ jobs:
         uses: thedoctor0/zip-release@main
         with:
           type: zip
-          filename: ${{ env.project }}-${{ steps.toml.outputs.value }}-${{ matrix.platform.name }}.zip
+          filename: ${{ env.project }}-${{ steps.toml.outputs.value }}-aarch64.zip
           path: ${{ env.project }}${{ matrix.platform.ext }}
           directory: target/aarch64-unknown-linux-gnu/release
 
@@ -67,5 +67,5 @@ jobs:
         uses: Shopify/upload-to-release@v1.0.1
         with:
           name: ${{ env.project }}-${{ steps.toml.outputs.value }}-${{ matrix.platform.name }}.zip
-          path: target/release/${{ env.project }}-${{ steps.toml.outputs.value }}-${{ matrix.platform.name }}.zip
+          path: target/aarch64-unknown-linux-gnu/release/${{ env.project }}-${{ steps.toml.outputs.value }}-aarch64.zip
           repo-token: ${{ secrets.GITHUB_TOKEN }}
