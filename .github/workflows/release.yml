@@ -28,7 +28,6 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             ./target
-
       - name: Get version
         uses: SebRollen/toml-action@v1.0.1
         id: toml
