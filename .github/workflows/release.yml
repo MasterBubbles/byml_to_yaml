@@ -53,7 +53,7 @@ jobs:
         with:
           version: v4.0.2
           args: --best --lzma
-          files: ./target/release/${{ env.project }}${{ matrix.platform.ext }}
+          files: ./target/aarch64-unknown-linux-gnu/release/${{ env.project }}${{ matrix.platform.ext }}
 
       - name: Archive release
         uses: thedoctor0/zip-release@main
@@ -61,7 +61,7 @@ jobs:
           type: zip
           filename: ${{ env.project }}-${{ steps.toml.outputs.value }}-${{ matrix.platform.name }}.zip
           path: ${{ env.project }}${{ matrix.platform.ext }}
-          directory: target/release
+          directory: target/aarch64-unknown-linux-gnu/release
 
       - name: Upload release assets
         uses: Shopify/upload-to-release@v1.0.1
